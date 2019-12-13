@@ -1,5 +1,6 @@
 $(document).ready(function(){
-    // Eseguire una chiamata ajax
+    // Esegui una chiamata ajax
+    // Utilizza handlebars per inserire le card in pagina
     $.ajax({
         'url':'https://flynn.boolean.careers/exercises/api/array/music',
         'method':'GET',
@@ -32,10 +33,25 @@ $(document).ready(function(){
             alert('errore:' + err.status);
         },
     });
+    // BONUS: aggiungere una tendina con i generi che permette all'utente di filtrare i dischi (evento change)
+    $('#genre_choose').change(function(){
+        //recupero il genere selezionato
+        var genere_selected = $(this).val();
+        console.log(genere_selected);
+        //per ogni cd devo controllare se il genere è uguale
+        $('.cd').each(function(){
+            var genere_album = $(this).attr('data-genere');
+            console.log(genere_album);
+            //se è uguale a data-genere lo mostro
+            if(genere_selected.toLowerCase() == genere_album.toLowerCase()) {
+                console.log('sono uguali');
+                $(this).fadeIn()
+            } else {
+                //altrimenti lo nascondo
+                $(this).fadeOut()
+                console.log('non sono uguali');
+            }
 
-    // Utilizzando handlebars, disegnare in pagina una card per ogni disco.
-
-
-
-    // BONUS: aggiungere una tendina con i generi: pop, rock, metal e jazz, che permette all'utente di filtrare i dischi visualizzati in base al genere selezionato.
-})
+        })
+    });
+});
